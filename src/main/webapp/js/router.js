@@ -36,6 +36,11 @@ define([
 				this.navigate('about', true);
 			}, this);
 
+
+			// Bootstrap ezWall config
+			Jenkins.config.set('url', '.');
+			Jenkins.config.fetch();
+
 			// Initialize Dashboard
 			this.dashboard = new Dashboard.View({
 				model : this.view
@@ -43,8 +48,8 @@ define([
 			this.dashboard.render();
 
 			// Bootstrap ezWall config
-			Jenkins.config.set('url', '.');
-			Jenkins.config.fetch();
+			/*Jenkins.config.set('url', '.');
+			Jenkins.config.fetch();*/
 
 			console.log('AppRouter: initiliazed');
 		},

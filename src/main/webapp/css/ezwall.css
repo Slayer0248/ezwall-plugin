@@ -78,6 +78,7 @@ body {
 	text-align: center;
 	border-radius: 10px;
 	box-shadow: 2px 2px 3px gray;
+	word-break: break-all;
 	
 	/* CSS3 Box layout */
 	
@@ -122,12 +123,24 @@ body {
 	font-weight: bold;
 	display:inline-block;
 	vertical-align: middle;
+	word-break: break-all;
+
   	
   	-webkit-transition: color 1s ease-in-out;
     -moz-transition: color 1s ease-in-out;
     -o-transition: color 1s ease-in-out;
     -ms-transition: color 1s ease-in-out;
     transition: color 1s ease-in-out;
+
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    -ms-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+}
+
+#build-grid .job-glow-subtle {
+	opacity: 0.5;
 }
 
 #build-grid .job-glow {

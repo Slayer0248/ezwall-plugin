@@ -133,7 +133,12 @@ define([
 
 		fetchAll : function() {
 			this.each(function(job) {
-				job.fetch();
+				//var jobText = String(Jenkins.config.get('jobText'));
+				//console.log(jobText);
+				//var jobList = jobText.split(/,\s*/);
+				//if(jobList.indexOf(job.get('name')) != -1 || jobList.indexOf(job.get('displayName')) != -1) {
+				   job.fetch();
+				//}
 			});
 		}
 	});

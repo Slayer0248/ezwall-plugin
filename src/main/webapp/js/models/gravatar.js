@@ -2,8 +2,9 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'models/jenkins',
   'md5'
-], function($, _, Backbone, MD5){
+], function($, _, Backbone, Jenkins, MD5, Pics){
 				
 	var Gravatar = {};
 	
@@ -12,7 +13,7 @@ define([
 	};
 	
 	Gravatar.url = function(email, size) {
-		var url = 'http://www.gravatar.com/avatar/';
+        //get from gravatar
 		url += this.hash(email);
 		if (size) {
 			url += '?s=';

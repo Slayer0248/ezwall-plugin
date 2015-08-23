@@ -27,7 +27,9 @@ define([
 					click : this.cancel
 				} ]
 			});
+			document.getElementById("jobSelect").value = this.model.get('jobText');
 			console.log('SettingsPopup: rendered');
+			
 			return this;
 		},
 
@@ -44,6 +46,9 @@ define([
 			this.model.set('showGravatar', this.$('#showGravatar').is(':checked'));
 			this.model.set('showUsername', this.$('#showUsername').is(':checked'));
 			this.model.set('showBuildNumber', this.$('#showBuildNumber').is(':checked'));
+            this.model.set('subtleMode', this.$('#subtleMode').is(':checked'));
+            this.model.set('jobText', document.getElementById("jobSelect").value);
+            //jobsToShow = this.$('#jobSelect').val();
 			this.close();
 		},
 
@@ -57,3 +62,5 @@ define([
 	return Settings;
 
 });
+
+

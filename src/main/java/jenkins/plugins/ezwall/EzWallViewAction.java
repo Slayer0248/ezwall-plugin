@@ -31,10 +31,19 @@ import hudson.model.Api;
 import hudson.model.Descriptor;
 import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
+import java.util.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.awt.image.WritableRaster;
+import java.awt.image.DataBufferByte;
+import java.io.*;
+import java.util.logging.*;
+import java.util.logging.Level;
 
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.export.Exported;
 import org.kohsuke.stapler.export.ExportedBean;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * Display the EzWall action on each view.
@@ -47,7 +56,8 @@ public class EzWallViewAction implements Action, Describable<EzWallViewAction> {
 	public final static String SHORT_NAME = "ezwall";
 	
 	public final static String DISPLAY_NAME = "EzWall";
-	
+
+
 	public Api getApi() {
 		return new Api(this);
 	}
@@ -79,6 +89,7 @@ public class EzWallViewAction implements Action, Describable<EzWallViewAction> {
 		return SHORT_NAME;
 	}
 
+
 	@Exported
 	public int getPollInterval() {
 		return getDescriptor().getPollInterval();
@@ -86,6 +97,7 @@ public class EzWallViewAction implements Action, Describable<EzWallViewAction> {
 
 	@Exported
 	public boolean getShowGravatar() {
+
 		return getDescriptor().getShowGravatar();
 	}
 
@@ -98,7 +110,12 @@ public class EzWallViewAction implements Action, Describable<EzWallViewAction> {
 	public boolean getShowBuildNumber() {
 		return getDescriptor().getShowBuildNumber();
 	}
-	
+
+    @Exported
+    public boolean getSubtleMode() {
+        return getDescriptor().getSubtleMode();
+    }
+
 	@Exported
 	public String getVersion() {
 		return getPluginWrapper().getVersion();
@@ -106,10 +123,16 @@ public class EzWallViewAction implements Action, Describable<EzWallViewAction> {
 	
 	@Exported
 	public String getRootUrl() {
-		return Jenkins.getInstance().getRootUrlFromRequest();
+		return Jenkins.getInstance().getRootUrl();
+	}
+
+	@Exported
+	public String getJobText() {
+		return getDescriptor().getJobText();
 	}
 	
 	public EzWallViewActionDescriptor getDescriptor() {
+		
 		return EzWallViewActionDescriptor.class.cast(Jenkins.getInstance().getDescriptorOrDie(getClass()));
 	}
 	
@@ -120,6 +143,7 @@ public class EzWallViewAction implements Action, Describable<EzWallViewAction> {
 	@Extension
 	public static final class EzWallViewActionDescriptor extends Descriptor<EzWallViewAction> {
 
+
 		private int pollInterval = 5;
 		
 		private boolean showGravatar = false;
@@ -128,9 +152,18 @@ public class EzWallViewAction implements Action, Describable<EzWallViewAction> {
 		
 		private boolean showUsername = false;
 
+        private boolean subtleMode = false;
+
+        private String jobText = "";
+  
+
 		@Override
 		public String getDisplayName() {
 			return DISPLAY_NAME;
+		}
+
+		public EzWallViewActionDescriptor() {
+			load();
 		}
 
 		@Override
@@ -171,6 +204,24 @@ public class EzWallViewAction implements Action, Describable<EzWallViewAction> {
 		public void setShowUsername(boolean showUsername) {
 			this.showUsername = showUsername;
 		}
+
+        public boolean getSubtleMode() {
+            return subtleMode;
+        }
+
+        public void setSubtleMode(boolean subtleMode) {
+            this.subtleMode = subtleMode;
+        }
+
+
+        public String getJobText() {
+            return jobText;
+        }
+
+        public void setJobText(String jobText) {
+            this.jobText = jobText;
+            //System.out.println(this.jobText);
+        }
 
 	}
 
